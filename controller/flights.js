@@ -20,7 +20,7 @@ export const getFlight = async (req, res) => {
     }
 }
 export const postFlight = async (req, res) => {
-    const newFlight = new FlightModel(req.body)
+    const newFlight = new FlightModel(req.body.flight)
     try {
         console.groupEnd('newFlight', newFlight)
         const result = await newFlight.save()
@@ -31,7 +31,9 @@ export const postFlight = async (req, res) => {
 }
 export const updateFlight = async (req, res) => {
     try {
-        const result = await FlightModel.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true })
+        console.log(req.params.id, req.body)
+        const result = await FlightModel.findByIdAndUpdate(req.params.id, { $set: req.body.flight }, { new: true })
+        console.log(result)
         res.status(200).json(result)
     } catch (err) {
         res.status(500).json(err)
